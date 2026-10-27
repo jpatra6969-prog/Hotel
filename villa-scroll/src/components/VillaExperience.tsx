@@ -7,7 +7,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "./Navbar";
 
 import TourChapterOverlay from "./TourChapterOverlay";
+import QuickBookingBar from "./QuickBookingBar";
+import EstateStorySection from "./EstateStorySection";
+import SuitesShowcase from "./SuitesShowcase";
 import AmenitiesSection from "./AmenitiesSection";
+import GastronomySection from "./GastronomySection";
 import TestimonialsSection from "./TestimonialsSection";
 import LocationSection from "./LocationSection";
 import FAQSection from "./FAQSection";
@@ -27,10 +31,7 @@ export default function VillaExperience() {
   const [currentFrame, setCurrentFrame] = useState<number>(1);
   const [isAutoTour, setIsAutoTour] = useState<boolean>(false);
 
-  // Currency selection
-  const [currency, setCurrency] = useState<string>("USD");
-  const currencySymbol =
-    currency === "USD" ? "$" : currency === "EUR" ? "€" : currency === "GBP" ? "£" : "¥";
+  const currencySymbol = "$";
 
   // Booking Drawer states
   const [isBookingOpen, setIsBookingOpen] = useState<boolean>(false);
@@ -100,13 +101,13 @@ export default function VillaExperience() {
     };
   }, []);
 
-  // Jump to specific chapter
-  const handleSelectChapter = useCallback((chapter: TourChapter) => {
+  // Jump to specific frame smoothly
+  const handleJumpToFrame = useCallback((frame: number) => {
     setIsAutoTour(false);
     if (!containerRef.current || !triggerRef.current) return;
 
     const trigger = triggerRef.current;
-    const progress = (chapter.startFrame - 1) / (TOTAL_FRAMES - 1);
+    const progress = (frame - 1) / (TOTAL_FRAMES - 1);
     const targetScroll = trigger.start + progress * SCROLL_DISTANCE;
 
     window.scrollTo({
@@ -114,6 +115,11 @@ export default function VillaExperience() {
       behavior: "smooth",
     });
   }, []);
+
+  // Jump to specific chapter
+  const handleSelectChapter = useCallback((chapter: TourChapter) => {
+    handleJumpToFrame(chapter.startFrame);
+  }, [handleJumpToFrame]);
 
   // Toggle Auto-Tour Playback
   const handleToggleAutoTour = useCallback(() => {
@@ -165,7 +171,7 @@ export default function VillaExperience() {
     };
   }, [isAutoTour]);
 
-  // Handle Quick Booking from bar or modal
+  // Handle Quick Booking from bar, cards or modal
   const handleOpenBooking = (suiteId?: string) => {
     if (suiteId) {
       setBookingSuiteId(suiteId);
@@ -173,20 +179,16 @@ export default function VillaExperience() {
     setIsBookingOpen(true);
   };
 
-
-
   return (
-    <div className="relative bg-zinc-950 text-white min-h-screen selection:bg-amber-400 selection:text-black">
-      {/* Royal Luxury Navigation Header (Transparent overlay) */}
+    <div className="relative bg-[#FAF8F5] text-[#1C1917] min-h-screen selection:bg-[#B8923A] selection:text-white font-sans">
+      {/* Luxury Navigation Header with Atmospheric Scrim */}
       <Navbar
         onOpenBooking={() => handleOpenBooking()}
-        currency={currency}
-        setCurrency={setCurrency}
       />
 
-      {/* Pinned 4K Cinematic Canvas Section */}
-      <div id="virtual-tour" className="relative w-full">
-        <div ref={containerRef} className="h-screen w-full relative overflow-hidden bg-black">
+      {/* Pinned 4K Spatial Canvas Tour Section (Dramatic Softer Dark #12141A Hero) */}
+      <div id="virtual-tour" className="relative w-full bg-[#12141A] scroll-mt-20">
+        <div ref={containerRef} className="h-screen w-full relative overflow-hidden bg-[#12141A]">
           {/* Canvas Component with 150-frame instant precache & background queue */}
           <CanvasPreloader
             ref={preloaderRef}
@@ -204,7 +206,7 @@ export default function VillaExperience() {
             className="w-full h-full"
           />
 
-          {/* Interactive Chapter HUD on Canvas */}
+          {/* Luxury Sanctuary Editorial Card & Chapter Timeline */}
           <TourChapterOverlay
             currentFrame={currentFrame}
             totalFrames={TOTAL_FRAMES}
@@ -213,27 +215,47 @@ export default function VillaExperience() {
             onToggleAutoTour={handleToggleAutoTour}
             onReserveSuite={handleOpenBooking}
           />
-
-          {/* Subtle Bottom Scroll Hint */}
-          {currentFrame <= 20 && (
-            <div className="absolute inset-x-0 bottom-6 pointer-events-none flex flex-col items-center justify-center z-30 animate-pulse">
-              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-zinc-300">
-                Scroll or Select a Chapter Above to Explore
-              </span>
-              <div className="w-4 h-7 rounded-full border border-white/30 flex items-start justify-center p-1 mt-2">
-                <div className="w-1 h-2 bg-amber-400 rounded-full animate-bounce" />
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
+      {/* Integrated Luxury Quick Booking Bar */}
+      <QuickBookingBar
+        onCheckAvailability={(details) => {
+          setBookingCheckIn(details.checkIn);
+          setBookingCheckOut(details.checkOut);
+          if (details.suiteId !== "all") {
+            setBookingSuiteId(details.suiteId);
+          }
+          setBookingAdults(details.adults);
+          setBookingChildren(details.children);
+          setIsBookingOpen(true);
+        }}
+        currencySymbol={currencySymbol}
+      />
 
+      {/* Architectural Heritage & Spatial Exploration Guide */}
+      <EstateStorySection
+        onJumpToTourChapter={(startFrame) => handleJumpToFrame(startFrame)}
+        onOpenBooking={() => handleOpenBooking()}
+      />
 
-      {/* Resort Amenities & Experiences */}
+      {/* Accommodations Showcase: Suites, Penthouses & Private Residences */}
+      <SuitesShowcase
+        onSelectSuiteForBooking={(suite) => {
+          setBookingSuiteId(suite.id);
+          setIsBookingOpen(true);
+        }}
+        onJumpToTourFrame={(frame) => handleJumpToFrame(frame)}
+        currencySymbol={currencySymbol}
+      />
+
+      {/* Resort Amenities & Curated Experiences */}
       <AmenitiesSection onOpenBooking={() => handleOpenBooking()} />
 
-      {/* Forbes 5-Star Accolades & Guest Testimonials */}
+      {/* Epicurean Gastronomy & Sommelier Cellar */}
+      <GastronomySection onOpenBooking={() => handleOpenBooking()} />
+
+      {/* Forbes 5-Star Accolades & Verified Guest Testimonials */}
       <TestimonialsSection />
 
       {/* Geographic Location & Helicopter Transfers */}
@@ -242,7 +264,7 @@ export default function VillaExperience() {
       {/* Guest Inquiries & FAQ */}
       <FAQSection />
 
-      {/* Editorial Luxury Footer */}
+      {/* Editorial Luxury Brand Footer */}
       <Footer onOpenBooking={() => handleOpenBooking()} />
 
       {/* Interactive Reservation Drawer */}

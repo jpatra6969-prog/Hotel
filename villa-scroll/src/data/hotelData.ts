@@ -16,6 +16,16 @@ export interface SuiteItem {
   featuredFrame: number;
 }
 
+export const PAYMENT_METHODS = [
+  "Net Banking",
+  "Cash",
+  "Credit Card",
+  "Debit Card",
+  "UPI",
+] as const;
+
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+
 export interface TourChapter {
   id: string;
   number: string;
@@ -257,7 +267,7 @@ export const BOOKING_ADD_ONS: AddOnItem[] = [
     price: 380,
     unit: "per guest",
     category: "culinary",
-    description: "Prepared table-side by Executive Chef Marco Bellini, paired with grand cru Italian wines.",
+    description: "Prepared table-side by Executive Chef Sanjeev Oberoi, paired with grand cru reserve wines.",
   },
   {
     id: "heli-transfer",
@@ -290,7 +300,7 @@ export const HOTEL_AMENITIES = [
     title: "Culinary Gastronomy",
     subtitle: "3 Michelin Star Restaurant 'L'Orizzonte'",
     description:
-      "Led by Chef Marco Bellini, our dining pavilion showcases seafood caught hours before sunset, heirloom vegetables grown in our volcanic soil terraces, and a cellar of over 1,800 historic vintages.",
+      "Led by Chef Sanjeev Oberoi, our dining pavilion showcases seafood caught hours before sunset, heirloom vegetables grown in our volcanic soil terraces, and a cellar of over 1,800 historic vintages.",
     tags: ["Tasting Menu", "Sommelier Cellar", "Sunset Terrace", "In-Villa Private Chef"],
     image: "/frames/frame_0450.jpg",
   },
@@ -323,19 +333,19 @@ export const HOTEL_AMENITIES = [
 export const GUEST_REVIEWS = [
   {
     id: "1",
-    author: "Elena von Berg",
-    location: "Zurich, Switzerland",
+    author: "Aishwarya & Devendra Singhania",
+    location: "Mumbai, India",
     rating: 5,
     title: "An Architectural Masterpiece Beyond Words",
     content:
-      "We have stayed at top resorts worldwide, but this villa exists in its own realm. The seamless transition between the living pavilion and the sunset infinity pool is sheer poetry. The private butler, Matteo, anticipated every request before we even voiced it.",
+      "We have stayed at top resorts worldwide, but this villa exists in its own realm. The seamless transition between the living pavilion and the sunset infinity pool is sheer poetry. The private butler, Raghav, anticipated every request before we even voiced it.",
     stayType: "Grand Sunset Villa • 7 Nights",
     verified: true,
   },
   {
     id: "2",
-    author: "Jonathan & Claire Vance",
-    location: "London, United Kingdom",
+    author: "Vikram & Ananya Malhotra",
+    location: "New Delhi, India",
     rating: 5,
     title: "The Most Magical Anniversary of Our Lives",
     content:
@@ -345,8 +355,8 @@ export const GUEST_REVIEWS = [
   },
   {
     id: "3",
-    author: "David H. Sterling",
-    location: "New York, USA",
+    author: "Rajesh & Sunita Oberoi",
+    location: "Bengaluru, India",
     rating: 5,
     title: "Supreme Privacy, Unmatched Excellence",
     content:

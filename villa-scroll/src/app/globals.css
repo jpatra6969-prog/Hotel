@@ -1,93 +1,130 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons@3.3.1/css/all/all.min.css');
 @import "tailwindcss";
 
 :root {
-  --background: #060709;
-  --foreground: #f4f4f5;
-  --gold-primary: #d4af37;
-  --gold-light: #f7e7ce;
-  --gold-dark: #aa8210;
+  --background: #FAF8F5;
+  --surface: #FFFFFF;
+  --text-primary: #1C1917;
+  --text-secondary: #57534E;
+  --border-color: #E7E2DA;
+  --brand-navy: #14213D;
+  --brand-green: #1F3D36;
+  --accent-gold: #B8923A;
+  --accent-hover: #9C7A2E;
+  --color-success: #15803D;
+  --color-error: #B91C1C;
+  --dark-hero: #12141A;
+  --font-central: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --color-surface: var(--surface);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-border: var(--border-color);
+  --color-navy: var(--brand-navy);
+  --color-gold: var(--accent-gold);
+  --font-serif: var(--font-central);
+  --font-sans: var(--font-central);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-central);
   overflow-x: hidden;
-  selection-background-color: #d4af37;
-  selection-color: #000;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide native scrollbars */
-html, body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+/* Hide native scrollbars globally across all elements */
+html, body, *, *::before, *::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
+
 html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-/* Luxury Gold & Glass Utilities */
-.font-serif {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+.no-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-.font-sans {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #fcebc2 0%, #d4af37 50%, #aa8210 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Centralized Professional Typography */
+.font-serif,
+.font-sans,
+body,
+button,
+input,
+select,
+textarea {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
-.gold-border-glow {
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.08);
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  letter-spacing: -0.02em;
 }
 
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Gold Accent Button - Natural, no colored glow */
 .gold-button {
-  background: linear-gradient(135deg, #dfbc55 0%, #c99e28 100%);
-  color: #090a0d;
+  background-color: #B8923A;
+  color: #FFFFFF;
   font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+  letter-spacing: 0.08em;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .gold-button:hover {
-  background: linear-gradient(135deg, #ebd07b 0%, #d8ae35 100%);
-  box-shadow: 0 6px 28px rgba(212, 175, 55, 0.4);
+  background-color: #9C7A2E;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
 
-.glass-panel {
-  background: rgba(14, 16, 21, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Navy Brand Button - Natural, no glow */
+.navy-button {
+  background-color: #14213D;
+  color: #FFFFFF;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
-.glass-panel-gold {
-  background: rgba(18, 19, 24, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(212, 175, 55, 0.2);
+.navy-button:hover {
+  background-color: #1d2f57;
+  transform: translateY(-1px);
 }
 
-@keyframes pulseSubtle {
-  0%, 100% { opacity: 0.9; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.02); }
+/* Natural Dark Hero Card - Crisp border, solid softer dark #12141A */
+.dark-glass-card {
+  background-color: #12141A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.animate-pulse-subtle {
-  animation: pulseSubtle 3s infinite ease-in-out;
+/* Natural Light Surface Card */
+.surface-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E7E2DA;
+  box-shadow: 0 1px 3px rgba(28, 25, 23, 0.03);
 }

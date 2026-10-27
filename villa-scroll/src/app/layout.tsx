@@ -26,8 +26,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full bg-[#060709] text-white antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className="h-full bg-[#FAF8F5] text-[#1C1917] antialiased">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons@3.3.1/css/all/all.min.css"
+        />
+      </head>
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col font-sans bg-[#FAF8F5] text-[#1C1917]"
+      >
+        {children}
+      </body>
     </html>
   );
 }

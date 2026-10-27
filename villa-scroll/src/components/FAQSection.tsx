@@ -12,16 +12,16 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="relative z-20 bg-zinc-950 px-4 sm:px-8 py-24 sm:py-32 border-t border-zinc-900">
+    <section id="faq" className="relative z-20 bg-[#FAF8F5] px-4 sm:px-8 py-24 sm:py-32 border-t border-[#E7E2DA] font-sans scroll-mt-24 sm:scroll-mt-28">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-amber-400 font-mono text-xs tracking-[0.3em] uppercase block mb-3">
+          <span className="text-[#B8923A] text-xs font-semibold tracking-[0.08em] uppercase block mb-3">
             Guest Inquiries
           </span>
-          <h2 className="text-3xl sm:text-5xl font-serif text-white font-light tracking-wide leading-tight">
+          <h2 className="text-3xl sm:text-5xl font-serif font-medium text-[#1C1917] tracking-normal leading-[1.2]">
             Frequently Asked Questions
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base mt-4 font-light leading-relaxed">
+          <p className="text-[#57534E] text-base mt-4 font-normal leading-[1.6]">
             Everything you need to know about preparing for your stay at Aura Sanctuary.
           </p>
         </div>
@@ -32,17 +32,17 @@ export default function FAQSection() {
             return (
               <div
                 key={index}
-                className="rounded-2xl bg-zinc-900/40 border border-white/5 overflow-hidden transition-all duration-300"
+                className="rounded-2xl bg-white border border-[#E7E2DA] shadow-sm overflow-hidden transition-all duration-300"
               >
                 <button
                   onClick={() => toggle(index)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 hover:text-amber-300 transition-colors"
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 hover:text-[#B8923A] transition-colors"
                 >
-                  <span className="font-serif text-base sm:text-lg text-white">
+                  <span className="font-serif text-lg font-medium text-[#1C1917]">
                     {faq.question}
                   </span>
                   <div
-                    className={`transform transition-transform duration-300 flex-shrink-0 text-amber-400 ${
+                    className={`transform transition-transform duration-300 flex-shrink-0 text-[#B8923A] ${
                       isOpen ? "rotate-180" : "rotate-0"
                     }`}
                   >
@@ -51,7 +51,7 @@ export default function FAQSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-zinc-400 font-light leading-relaxed border-t border-white/5 animate-fadeIn">
+                  <div className="px-6 pb-6 pt-1 text-sm text-[#57534E] font-normal leading-[1.6] border-t border-[#E7E2DA] animate-fadeIn">
                     {faq.answer}
                   </div>
                 )}

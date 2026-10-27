@@ -9,7 +9,6 @@ import {
   BathIcon,
   MaximizeIcon,
   UsersIcon,
-  SparklesIcon,
 } from "./Icons";
 
 interface SuiteDetailsModalProps {
@@ -32,24 +31,24 @@ export default function SuiteDetailsModal({
   if (!suite) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-xl animate-fadeIn">
-      <div className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-zinc-950 border border-amber-500/30 rounded-3xl shadow-2xl text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 animate-fadeIn font-sans">
+      <div className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-white border border-[#E7E2DA] rounded-2xl shadow-xl text-[#1C1917] no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-20 w-9 h-9 rounded-full bg-black/60 border border-white/20 hover:border-amber-400 text-white flex items-center justify-center transition-all"
+          className="absolute top-5 right-5 z-20 w-9 h-9 rounded-full bg-white border border-[#E7E2DA] hover:border-[#14213D] text-[#1C1917] flex items-center justify-center transition-colors shadow-sm"
         >
-          <CloseIcon size={18} />
+          <CloseIcon size={16} />
         </button>
 
         {/* Hero Gallery */}
-        <div className="relative w-full h-72 sm:h-96 overflow-hidden rounded-t-3xl bg-zinc-900">
+        <div className="relative w-full h-72 sm:h-96 overflow-hidden rounded-t-2xl bg-zinc-900">
           <img
             src={suite.galleryImages[activeImageIndex] || suite.coverImage}
             alt={suite.name}
             className="w-full h-full object-cover transition-all duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
           {/* Jump to 4K Walkthrough */}
           <button
@@ -57,146 +56,139 @@ export default function SuiteDetailsModal({
               onClose();
               onJumpToTour(suite.featuredFrame);
             }}
-            className="absolute top-5 left-5 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-amber-400/50 text-amber-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 hover:bg-amber-400/20 transition-all"
+            className="absolute top-5 left-5 px-3.5 py-1.5 rounded-full bg-[#12141A] border border-white/20 text-white text-xs font-semibold uppercase tracking-[0.08em] flex items-center gap-2 hover:bg-[#B8923A] transition-colors"
           >
-            <SparklesIcon size={14} />
-            <span>View in 4K Virtual Tour</span>
+            <span>Explore in 3D</span>
+            <span>→</span>
           </button>
 
-          {/* Gallery Thumbnails */}
-          <div className="absolute bottom-4 left-6 right-6 flex items-center gap-2 overflow-x-auto pb-1">
-            {suite.galleryImages.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveImageIndex(idx)}
-                className={`w-16 h-12 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
-                  activeImageIndex === idx
-                    ? "border-amber-400 scale-105"
-                    : "border-white/20 opacity-60 hover:opacity-100"
-                }`}
-              >
-                <img src={img} alt="thumbnail" className="w-full h-full object-cover" />
-              </button>
-            ))}
-          </div>
+          {/* Thumbnails */}
+          {suite.galleryImages.length > 1 && (
+            <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 overflow-x-auto pb-1">
+              {suite.galleryImages.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveImageIndex(i)}
+                  className={`w-14 h-10 rounded-lg overflow-hidden border-2 transition-colors flex-shrink-0 ${
+                    activeImageIndex === i
+                      ? "border-[#B8923A]"
+                      : "border-white/40 opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-10">
-          {/* Header & Pricing */}
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-white/10 pb-6">
+        <div className="p-6 sm:p-10 space-y-8">
+          {/* Header Row */}
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b border-[#E7E2DA]">
             <div>
-              <span className="text-amber-400 text-xs font-mono tracking-[0.25em] uppercase">
-                {suite.category} • Signature Collection
+              <span className="text-xs uppercase tracking-[0.08em] font-semibold text-[#B8923A] block mb-1">
+                {suite.category}
               </span>
-              <h2 className="text-2xl sm:text-4xl font-serif mt-1">{suite.name}</h2>
-              <p className="text-zinc-400 text-xs sm:text-sm mt-1 font-light italic">
+              <h2 className="text-2xl sm:text-4xl font-serif font-medium text-[#1C1917]">
+                {suite.name}
+              </h2>
+              <p className="text-sm text-[#57534E] font-medium mt-1">
                 {suite.tagline}
               </p>
             </div>
 
             <div className="sm:text-right">
-              <div className="text-2xl sm:text-3xl font-serif text-amber-300">
-                {currencySymbol}
-                {suite.pricePerNight.toLocaleString()}
-                <span className="text-xs text-zinc-400 font-sans font-light"> / night</span>
+              <span className="text-xs uppercase tracking-[0.08em] text-[#57534E] block">Starting from</span>
+              <div className="text-3xl font-sans font-semibold text-[#1C1917] tabular-nums">
+                {currencySymbol}{suite.pricePerNight.toLocaleString("en-US")}
               </div>
-              <span className="text-[10px] text-zinc-500 font-mono">Taxes & butler service included</span>
+              <span className="text-xs text-[#57534E]">per night • taxes included</span>
             </div>
           </div>
 
-          {/* Quick Specifications */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-6 border-b border-white/10 text-xs font-mono">
-            <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
-              <MaximizeIcon size={18} className="text-amber-400" />
-              <div>
-                <div className="text-[10px] text-zinc-400">Total Area</div>
-                <div className="text-white font-semibold">{suite.sqFt.toLocaleString()} sq.ft</div>
-              </div>
+          {/* Key Dimensions Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-[#FAF8F5] border border-[#E7E2DA] text-center text-xs">
+            <div className="flex flex-col items-center">
+              <MaximizeIcon size={16} className="text-[#B8923A] mb-1" />
+              <span className="font-semibold text-[#1C1917] tabular-nums">{suite.sqFt.toLocaleString("en-US")} sq.ft</span>
+              <span className="text-[#57534E] text-[11px]">Private Living Area</span>
             </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
-              <BedIcon size={18} className="text-amber-400" />
-              <div>
-                <div className="text-[10px] text-zinc-400">Bedrooms</div>
-                <div className="text-white font-semibold">{suite.bedrooms} King Suites</div>
-              </div>
+            <div className="flex flex-col items-center">
+              <UsersIcon size={16} className="text-[#B8923A] mb-1" />
+              <span className="font-semibold text-[#1C1917] tabular-nums">Up to {suite.maxGuests} Guests</span>
+              <span className="text-[#57534E] text-[11px]">Max Occupancy</span>
             </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
-              <BathIcon size={18} className="text-amber-400" />
-              <div>
-                <div className="text-[10px] text-zinc-400">Bathrooms</div>
-                <div className="text-white font-semibold">{suite.bathrooms} Marble Baths</div>
-              </div>
+            <div className="flex flex-col items-center">
+              <BedIcon size={16} className="text-[#B8923A] mb-1" />
+              <span className="font-semibold text-[#1C1917] tabular-nums">{suite.bedrooms} Master Bedrooms</span>
+              <span className="text-[#57534E] text-[11px]">En-Suite Kings</span>
             </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
-              <UsersIcon size={18} className="text-amber-400" />
-              <div>
-                <div className="text-[10px] text-zinc-400">Occupancy</div>
-                <div className="text-white font-semibold">Up to {suite.maxGuests} Guests</div>
-              </div>
+            <div className="flex flex-col items-center">
+              <BathIcon size={16} className="text-[#B8923A] mb-1" />
+              <span className="font-semibold text-[#1C1917] tabular-nums">{suite.bathrooms} Luxury Baths</span>
+              <span className="text-[#57534E] text-[11px]">Marble Bathrooms</span>
             </div>
           </div>
 
-          {/* Detailed Description */}
-          <div className="py-6 border-b border-white/10">
-            <h3 className="text-sm font-mono uppercase tracking-wider text-amber-400/90 mb-2">
-              The Experience
-            </h3>
-            <p className="text-zinc-300 text-sm leading-relaxed font-light">
+          {/* Description */}
+          <div>
+            <h4 className="text-xs uppercase tracking-[0.08em] font-semibold text-[#1C1917] mb-2">
+              The Living Experience
+            </h4>
+            <p className="text-[#57534E] text-sm leading-[1.6] font-normal">
               {suite.description}
             </p>
           </div>
 
-          {/* Key Amenities & Inclusions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-b border-white/10">
+          {/* Key Amenities & Inclusions Split Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">
             <div>
-              <h3 className="text-sm font-mono uppercase tracking-wider text-amber-400/90 mb-3">
-                Key Amenities
-              </h3>
-              <ul className="space-y-2 text-xs text-zinc-300">
-                {suite.keyAmenities.map((amenity, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <CheckIcon size={14} className="text-amber-400 flex-shrink-0" />
-                    <span>{amenity}</span>
+              <h4 className="text-xs uppercase tracking-[0.08em] font-semibold text-[#1C1917] mb-3">
+                Key Residence Amenities
+              </h4>
+              <ul className="space-y-2 text-xs text-[#57534E]">
+                {suite.keyAmenities.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <CheckIcon size={14} className="text-[#15803D] flex-shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-mono uppercase tracking-wider text-amber-400/90 mb-3">
-                VIP Inclusions
-              </h3>
-              <ul className="space-y-2 text-xs text-zinc-300">
-                {suite.includedServices.map((service, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <SparklesIcon size={14} className="text-amber-400 flex-shrink-0" />
-                    <span>{service}</span>
+              <h4 className="text-xs uppercase tracking-[0.08em] font-semibold text-[#1C1917] mb-3">
+                Complimentary Inclusions
+              </h4>
+              <ul className="space-y-2 text-xs text-[#57534E]">
+                {suite.includedServices.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <CheckIcon size={14} className="text-[#B8923A] flex-shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
 
-          {/* Modal Action CTA */}
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-xs text-zinc-400">
-              Complimentary cancellation up to 14 days prior to arrival.
+          {/* Footer Action Bar */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#E7E2DA]">
+            <div className="text-xs text-[#57534E] text-center sm:text-left">
+              Direct bookings include VIP airport Riva transfer and Dom Pérignon arrival greeting.
             </div>
 
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <button
                 onClick={onClose}
-                className="w-1/2 sm:w-auto px-6 py-3 rounded-full border border-white/20 text-xs font-mono uppercase tracking-wider hover:bg-white/5 transition-colors"
+                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-full border border-[#E7E2DA] hover:border-[#14213D] text-[#1C1917] text-xs font-semibold uppercase tracking-[0.08em]"
               >
                 Close
               </button>
+
               <button
-                onClick={() => {
-                  onClose();
-                  onBookSuite(suite);
-                }}
-                className="w-1/2 sm:w-auto gold-button px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider shadow-xl"
+                onClick={() => onBookSuite(suite)}
+                className="gold-button flex-1 sm:flex-initial px-7 py-2.5 rounded-full text-xs font-semibold uppercase tracking-[0.08em] transition-colors"
               >
                 Reserve This Suite
               </button>
